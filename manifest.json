@@ -1,0 +1,37 @@
+{
+    "name": "Linkedin Jobs",
+    "version": "0.1.0",
+    "description": "Linkedin Application",
+    "permissions": ["storage", "tabs"],
+    "host_permissions": ["https://*.linkedin.com/*"],
+    "background": {
+      "service_worker": "background.js"
+    },
+    "content_scripts": [
+      {
+        "matches": ["https://*.linkedin.com/*"],
+        "js": ["contentscript.js"]
+      }
+    ],
+    "web_accessible_resources": [
+      {
+        "resources": [
+          "assets/padlock.png",
+          "assets/bookmark.png",
+          "assets/play.png",
+          "assets/delete.png",
+          "assets/save.png"
+        ],
+        "matches": ["https://*.linkedin.com/*"]
+      }
+    ],
+    "action": {
+      "default_icon": {
+        "16": "assets/linkedin.png",
+        "32": "assets/linkedin.png"
+      },
+      "default_title": "Linkedin Applications",
+      "default_popup": "popup.html"
+    },
+    "manifest_version": 3
+  }

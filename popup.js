@@ -2,17 +2,21 @@ import { getActiveTabURL } from "./utils.js";
 
 const addNewBookmark = (jobs, job) => {
   const JobsIDElement = document.createElement("div");
+  const controlsElement = document.createElement("div");
   const newJobElement = document.createElement("div");
 
-  JobsIDElement.textContent = job.ID;
+  JobsIDElement.textContent = job.Title;
   JobsIDElement.className = "job-id";
-
-  newJobElement.className = "job";
+  setBookmarkAttributes("delete", onDelete, controlsElement);
+  newJobElement.className = "rainbow";
   newJobElement.setAttribute("id:", job.ID);
 
   newJobElement.appendChild(JobsIDElement);
+  newJobElement.appendChild(controlsElement);
   jobs.appendChild(newJobElement);
 };
+
+
 
 const viewBookmarks = (currentJobs=[]) => {
     const JobsElements = document.getElementById("jobs");

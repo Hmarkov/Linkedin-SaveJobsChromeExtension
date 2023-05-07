@@ -7,6 +7,7 @@
     font-size: 14px;
     font-weight: bold;
     padding: 8px;
+    text-align: center;
   }
   
   .textbox {
@@ -38,7 +39,6 @@
   }
   
   .job-id {
-    padding-left: 2px;
     font-size: 18px;
   }
   
@@ -52,3 +52,61 @@
     flex: auto;
     text-align: right;
   }
+
+
+
+  .rainbow {
+    display: flex;
+    border-radius: 10px;
+    padding: 2px;
+    margin: 5px;
+  
+    display: grid;
+
+    /* text-align: center; */
+  
+  
+    --border-size: 0.1rem;
+    border: var(--border-size) solid transparent;
+  
+    /* Paint an image in the border */
+    border-image: conic-gradient(
+        from var(--angle),
+        black 0deg 90deg,
+        white 90deg 180deg,
+        black 180deg 270deg,
+        white 270deg 360deg
+      )
+      1 stretch;
+    background: rgb(255 255 255 / var(--opacity));
+  }
+  
+  /* Animate when Houdini is available */
+  @supports (background: paint(houdini)) {
+    @property --opacity {
+      syntax: "<number>";
+      initial-value: 0.3;
+      inherits: false;
+    }
+  
+    @property --angle {
+      syntax: "<angle>";
+      initial-value: 0deg;
+      inherits: false;
+    }
+  
+    @keyframes opacityChange {
+      to {
+        --opacity: 1;
+      }
+    }
+  
+    @keyframes rotate {
+      to {
+        --angle: 360deg;
+      }
+    }
+  
+    .rainbow {
+      animation: rotate 4s linear infinite, opacityChange 3s infinite alternate;
+    }

@@ -16,7 +16,7 @@
       const easy=document.getElementsByClassName("jobs-apply-button artdeco-button artdeco-button--icon-right artdeco-button--3 artdeco-button--primary ember-view")[0];
       const JobTitle= document.getElementsByClassName("t-24 t-bold jobs-unified-top-card__job-title")[0].textContent;
       var FullUrl=window.location.href;
-      var JobId=FullUrl.split('currentJobId=').pop().split('&')[0];
+      const JobId=FullUrl.split('currentJobId=').pop().split('&')[0];
       const newJob = {
         Title: JobTitle,
         ID: JobId,

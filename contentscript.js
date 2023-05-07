@@ -1,72 +1,76 @@
 (() => {
-    let youtubeLeftControls, youtubePlayer;
+    let PlaceSaveBtn;
     let currentJobID = "";
-    let currentVideoBookmarks = [];
+    let Jobs = [];
   
-    // const fetchBookmarks = () => {
-    //   return new Promise((resolve) => {
-    //     chrome.storage.sync.get([currentVideo], (obj) => {
-    //       resolve(obj[currentVideo] ? JSON.parse(obj[currentVideo]) : []);
-    //     });
-    //   });
-    // };
+    const fetchBookmarks = () => {
+      return new Promise((resolve) => {
+        chrome.storage.sync.get(["Jobs"], (obj) => {
+          resolve(obj["Jobs"] ? JSON.parse(obj["Jobs"]) : []);
+        });
+      });
+    };
   
     const LockJobApplicationAndSave = async () => {
-        
-        const apply=document.getElementsByClassName("jobs-apply-button artdeco-button artdeco-button--3 artdeco-button--primary ember-view")[0];
-        const easy=document.getElementsByClassName("jobs-apply-button artdeco-button artdeco-button--icon-right artdeco-button--3 artdeco-button--primary ember-view")[0];
-        if(!apply){
-            easy.disabled=true;
-        }else{
-            apply.disabled=true;
-        }
-        const JobTitle= document.getElementsByClassName("t-24 t-bold jobs-unified-top-card__job-title")[0].textContent;
-        var FullUrl=window.location.href;
-        var JobId=fullurl.split('currentJobId=').pop().split('&')[0];
-      const newJobID = {
+      const apply=document.getElementsByClassName("jobs-apply-button artdeco-button artdeco-button--3 artdeco-button--primary ember-view")[0];
+      const easy=document.getElementsByClassName("jobs-apply-button artdeco-button artdeco-button--icon-right artdeco-button--3 artdeco-button--primary ember-view")[0];
+      const JobTitle= document.getElementsByClassName("t-24 t-bold jobs-unified-top-card__job-title")[0].textContent;
+      var FullUrl=window.location.href;
+      var JobId=FullUrl.split('currentJobId=').pop().split('&')[0];
+      const newJob = {
         Title: JobTitle,
         ID: JobId,
       };
-  
-    //   currentVideoBookmarks = await fetchBookmarks();
-  
-    //   chrome.storage.sync.set({
-    //     [currentVideo]: JSON.stringify([...currentVideoBookmarks, newBookmark].sort((a, b) => a.time - b.time))
-    //   });
+       Jobs = await fetchBookmarks();
+       Jobs.forEach(function (arrayItem) {
+        console.log();
+        if(!arrayItem.ID){
+            chrome.storage.sync.set({"Jobs": JSON.stringify([...Jobs, newJob])});
+            if(!apply){
+                easy.disabled=true;
+            }else{
+                apply.disabled=true;
+            }
+        }
+        });
     };
   
+    const ExistingJobsChck = async () => {
+      const apply=document.getElementsByClassName("jobs-apply-button artdeco-button artdeco-button--3 artdeco-button--primary ember-view")[0];
+      const easy=document.getElementsByClassName("jobs-apply-button artdeco-button artdeco-button--icon-right artdeco-button--3 artdeco-button--primary ember-view")[0];
+      Jobs = await fetchBookmarks();
+      Jobs.forEach(function (arrayItem) {
+      if(arrayItem.ID){
+          if(!apply){
+              easy.disabled=true;
+          }else{
+              apply.disabled=true;
+          }
+      }});
+    };
     const newJobLoaded = async () => {
       const bookmarkBtnExists = document.getElementsByClassName("lock-btn")[0];
-  
-    //   currentVideoBookmarks = await fetchBookmarks();
-  
       if (!bookmarkBtnExists) {
         const bookmarkBtn = document.createElement("img");
         bookmarkBtn.src = chrome.runtime.getURL("assets/padlock.png");
         bookmarkBtn.className = "jobs-lock " + "lock-btn";
         bookmarkBtn.title = "Click to lock apply button";
-  
-        youtubeLeftControls = document.getElementsByClassName("jobs-search-results-list__subtitle")[0];
-
-        youtubeLeftControls.appendChild(bookmarkBtn);
+        PlaceSaveBtn = document.getElementsByClassName("jobs-search-results-list__subtitle")[0];
+        PlaceSaveBtn.appendChild(bookmarkBtn);
         bookmarkBtn.addEventListener("click", LockJobApplicationAndSave);
       }
     };
   
     chrome.runtime.onMessage.addListener((obj, sender, response) => {
       const { type, value, JobID } = obj;
-  
       if (type === "NEW") {
         currentJobID = JobID;
-        console.log(currentJobID);
+        // console.log(currentJobID);
         newJobLoaded();
-      } else if (type === "PLAY") {
-        youtubePlayer.currentTime = value;
-      } else if ( type === "DELETE") {
-        currentVideoBookmarks = currentVideoBookmarks.filter((b) => b.time != value);
-        chrome.storage.sync.set({ [currentVideo]: JSON.stringify(currentVideoBookmarks) });
-  
-        response(currentVideoBookmarks);
+        setTimeout(function(){
+          ExistingJobsChck();
+      }, 500);
+       
       }
     });
   

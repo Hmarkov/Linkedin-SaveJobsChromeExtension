@@ -21,12 +21,12 @@
     border-color: #66afe9;
   }
   
-  .bookmarks {
+  .jobs {
     margin: 5px 5px;
     padding: 3px;
   }
   
-  .bookmark {
+  .job {
     display: flex;
     border-bottom-color: #00254d;
     border-bottom-width: 1px;
@@ -37,8 +37,9 @@
     margin-bottom: 7px;
   }
   
-  .bookmark-title {
+  .job-id {
     padding-left: 2px;
+    font-size: 18px;
   }
   
   .bookmark-controls img {

@@ -3,7 +3,7 @@
     let currentJobID = "";
     let Jobs = [];
   
-    const fetchBookmarks = () => {
+    const fetchJobs = () => {
       return new Promise((resolve) => {
         chrome.storage.sync.get(["Jobs"], (obj) => {
           resolve(obj["Jobs"] ? JSON.parse(obj["Jobs"]) : []);
@@ -21,24 +21,26 @@
         Title: JobTitle,
         ID: JobId,
       };
-       Jobs = await fetchBookmarks();
-       Jobs.forEach(function (arrayItem) {
-        console.log();
-        if(!arrayItem.ID){
-            chrome.storage.sync.set({"Jobs": JSON.stringify([...Jobs, newJob])});
+      Jobs = await fetchJobs();
+      Jobs.forEach(function (arrayItem) {
+        if(arrayItem.ID){
             if(!apply){
                 easy.disabled=true;
             }else{
                 apply.disabled=true;
             }
+           
+        }else{
+          chrome.storage.sync.set({"Jobs": JSON.stringify([...Jobs, newJob])});
         }
-        });
+      });
     };
-  
+
     const ExistingJobsChck = async () => {
       const apply=document.getElementsByClassName("jobs-apply-button artdeco-button artdeco-button--3 artdeco-button--primary ember-view")[0];
       const easy=document.getElementsByClassName("jobs-apply-button artdeco-button artdeco-button--icon-right artdeco-button--3 artdeco-button--primary ember-view")[0];
-      Jobs = await fetchBookmarks();
+      
+      Jobs = await fetchJobs();
       Jobs.forEach(function (arrayItem) {
       if(arrayItem.ID){
           if(!apply){
@@ -69,8 +71,9 @@
         newJobLoaded();
         setTimeout(function(){
           ExistingJobsChck();
+          
       }, 500);
-       
+      AddIDs();
       }
     });
   

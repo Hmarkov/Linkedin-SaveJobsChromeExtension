@@ -84,8 +84,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     console.log("rect");
     chrome.storage.sync.get(["Jobs"], (data) => {
       const currentJobs = data["Jobs"] ? JSON.parse(data["Jobs"]) : [];
-      console.log(currentJobs);
-
       viewBookmarks(currentJobs);
     });
   } else {

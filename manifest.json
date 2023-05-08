@@ -2,7 +2,7 @@
     "name": "Linkedin Jobs",
     "version": "0.1.0",
     "description": "Linkedin Application",
-    "permissions": ["storage", "tabs","clipboardRead","clipboardWrite"],
+    "permissions": ["storage", "tabs"],
     "host_permissions": ["https://*.linkedin.com/*"],
     "background": {
       "service_worker": "background.js"

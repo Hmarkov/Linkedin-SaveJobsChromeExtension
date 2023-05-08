@@ -92,14 +92,10 @@
         setTimeout(function(){
           ExistingJobsChck();
       }, 500);
-      }else if ( type === "COPY") {
-        currentVideoBookmarks = currentVideoBookmarks.filter((b) => b.time != value);
-        chrome.storage.sync.set({ [currentVideo]: JSON.stringify(currentVideoBookmarks) });
-  
-        response(currentVideoBookmarks);
+      }else if ( type === "TAB") {
+        window.open("/jobs/search/?currentJobId="+value, '_blank').focus();
       }else if ( type === "DELETE") {
         DeleteJob(value);
-        // response(currentVideoBookmarks);
       }
     });
   

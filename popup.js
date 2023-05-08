@@ -10,8 +10,10 @@ const addNewBookmark = (jobs, job) => {
   controlsElement.className = "job-controls";
 
   
-
+  setBookmarkAttributes("copy", onTAB, controlsElement);
   setBookmarkAttributes("delete", onDelete, controlsElement);
+
+
   newJobElement.className = "rainbow";
   newJobElement.setAttribute("id", job.ID);
 
@@ -40,14 +42,15 @@ const viewBookmarks = (currentJobs=[]) => {
     return;
 };
 
-const onCopy = async e => {
-  const bookmarkTime = e.target.parentNode.parentNode.getAttribute("timestamp");
-  const activeTab = await getActiveTabURL();
+const onTAB = async e => {
+    const activeTab = await getActiveTabURL();
 
-  chrome.tabs.sendMessage(activeTab.id, {
-    type: "PLAY",
-    value: bookmarkTime,
-  });
+    const jobid = e.target.parentNode.parentNode.getAttribute("id");
+
+    chrome.tabs.sendMessage(activeTab.id, {
+      type: "TAB",
+      value: jobid,
+    });
 };
 
 const onDelete = async e => {

@@ -7,14 +7,19 @@ const addNewBookmark = (jobs, job) => {
 
   JobsIDElement.textContent = job.Title;
   JobsIDElement.className = "job-id";
+  controlsElement.className = "job-controls";
+
+  
+
   setBookmarkAttributes("delete", onDelete, controlsElement);
   newJobElement.className = "rainbow";
-  newJobElement.setAttribute("id:", job.ID);
+  newJobElement.setAttribute("id", job.ID);
 
   newJobElement.appendChild(JobsIDElement);
   newJobElement.appendChild(controlsElement);
   jobs.appendChild(newJobElement);
 };
+
 
 
 
@@ -35,7 +40,7 @@ const viewBookmarks = (currentJobs=[]) => {
     return;
 };
 
-const onPlay = async e => {
+const onCopy = async e => {
   const bookmarkTime = e.target.parentNode.parentNode.getAttribute("timestamp");
   const activeTab = await getActiveTabURL();
 
@@ -47,17 +52,16 @@ const onPlay = async e => {
 
 const onDelete = async e => {
   const activeTab = await getActiveTabURL();
-  const bookmarkTime = e.target.parentNode.parentNode.getAttribute("timestamp");
-  const bookmarkElementToDelete = document.getElementById(
-    "bookmark-" + bookmarkTime
-  );
 
-  bookmarkElementToDelete.parentNode.removeChild(bookmarkElementToDelete);
+  const jobid = e.target.parentNode.parentNode.getAttribute("id");
+
+  const jobElementToDelete = document.getElementById(jobid);
+  jobElementToDelete.parentNode.removeChild(jobElementToDelete);
 
   chrome.tabs.sendMessage(activeTab.id, {
     type: "DELETE",
-    value: bookmarkTime,
-  }, viewBookmarks);
+    value: jobid,
+  });
 };
 
 const setBookmarkAttributes =  (src, eventListener, controlParentElement) => {

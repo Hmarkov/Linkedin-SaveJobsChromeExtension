@@ -22,27 +22,47 @@
         ID: JobId,
       };
       Jobs = await fetchJobs();
-      Jobs.forEach(function (arrayItem) {
-        if(arrayItem.ID){
-            if(!apply){
-                easy.disabled=true;
-            }else{
-                apply.disabled=true;
-            }
-           
-        }else{
+      chrome.storage.sync.set({"Jobs": JSON.stringify([...Jobs, newJob])});
+      if(Jobs.length==0){
+        if(!apply){
+          easy.disabled=true;
           chrome.storage.sync.set({"Jobs": JSON.stringify([...Jobs, newJob])});
-        }
-      });
+
+        }else{
+            apply.disabled=true;
+            chrome.storage.sync.set({"Jobs": JSON.stringify([...Jobs, newJob])});
+        }  
+    }else{      
+      Jobs.forEach(function (arrayItem) {
+      if(arrayItem.ID!=JobId){
+          if(!apply){
+              easy.disabled=true;
+              chrome.storage.sync.set({"Jobs": JSON.stringify([...Jobs, newJob])});
+
+          }else{
+              apply.disabled=true;
+              chrome.storage.sync.set({"Jobs": JSON.stringify([...Jobs, newJob])});
+          }  
+      }
+    });}
+    };
+
+    const DeleteJob = async (id) => {
+      Jobs = await fetchJobs();
+      Jobs = Jobs.filter(elem => elem.ID != id);
+      chrome.storage.sync.set({ ["Jobs"]: JSON.stringify(Jobs) });
     };
 
     const ExistingJobsChck = async () => {
       const apply=document.getElementsByClassName("jobs-apply-button artdeco-button artdeco-button--3 artdeco-button--primary ember-view")[0];
       const easy=document.getElementsByClassName("jobs-apply-button artdeco-button artdeco-button--icon-right artdeco-button--3 artdeco-button--primary ember-view")[0];
       
+      var FullUrl=window.location.href;
+      const JobId=FullUrl.split('currentJobId=').pop().split('&')[0];
+
       Jobs = await fetchJobs();
       Jobs.forEach(function (arrayItem) {
-      if(arrayItem.ID){
+      if(arrayItem.ID==JobId){
           if(!apply){
               easy.disabled=true;
           }else{
@@ -65,15 +85,21 @@
   
     chrome.runtime.onMessage.addListener((obj, sender, response) => {
       const { type, value, JobID } = obj;
+      
       if (type === "NEW") {
         currentJobID = JobID;
-        // console.log(currentJobID);
         newJobLoaded();
         setTimeout(function(){
           ExistingJobsChck();
-          
       }, 500);
-      AddIDs();
+      }else if ( type === "COPY") {
+        currentVideoBookmarks = currentVideoBookmarks.filter((b) => b.time != value);
+        chrome.storage.sync.set({ [currentVideo]: JSON.stringify(currentVideoBookmarks) });
+  
+        response(currentVideoBookmarks);
+      }else if ( type === "DELETE") {
+        DeleteJob(value);
+        // response(currentVideoBookmarks);
       }
     });
   

@@ -1,6 +1,6 @@
 import { getActiveTabURL } from "./utils.js";
 
-const addNewBookmark = (jobs, job) => {
+const addNewJob = (jobs, job) => {
   const JobsIDElement = document.createElement("div");
   const controlsElement = document.createElement("div");
   const newJobElement = document.createElement("div");
@@ -10,8 +10,8 @@ const addNewBookmark = (jobs, job) => {
   controlsElement.className = "job-controls";
 
   
-  setBookmarkAttributes("copy", onTAB, controlsElement);
-  setBookmarkAttributes("delete", onDelete, controlsElement);
+  setJobAttributes("copy", onTAB, controlsElement);
+  setJobAttributes("delete", onDelete, controlsElement);
 
 
   newJobElement.className = "rainbow";
@@ -22,10 +22,7 @@ const addNewBookmark = (jobs, job) => {
   jobs.appendChild(newJobElement);
 };
 
-
-
-
-const viewBookmarks = (currentJobs=[]) => {
+const viewJobs = (currentJobs=[]) => {
     const JobsElements = document.getElementById("jobs");
     JobsElements.innerHTML = "";
 
@@ -33,7 +30,7 @@ const viewBookmarks = (currentJobs=[]) => {
         for (let i = 0; i < currentJobs.length; i++) {
             const job = currentJobs[i];
             // console.log(job);
-            addNewBookmark(JobsElements, job);
+            addNewJob(JobsElements, job);
         }
     } else {
     JobsElements.innerHTML = '<i class="row">No bookmarks to show</i>';
@@ -67,7 +64,7 @@ const onDelete = async e => {
   });
 };
 
-const setBookmarkAttributes =  (src, eventListener, controlParentElement) => {
+const setJobAttributes =  (src, eventListener, controlParentElement) => {
   const controlElement = document.createElement("img");
 
   controlElement.src = "assets/" + src + ".png";
@@ -87,7 +84,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     console.log("rect");
     chrome.storage.sync.get(["Jobs"], (data) => {
       const currentJobs = data["Jobs"] ? JSON.parse(data["Jobs"]) : [];
-      viewBookmarks(currentJobs);
+      viewJobs(currentJobs);
     });
   } else {
     const container = document.getElementsByClassName("container")[0];

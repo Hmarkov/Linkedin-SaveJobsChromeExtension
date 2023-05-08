@@ -10,8 +10,8 @@ const addNewJob = (jobs, job) => {
   controlsElement.className = "job-controls";
 
   
-  setJobAttributes("copy", onTAB, controlsElement);
-  setJobAttributes("delete", onDelete, controlsElement);
+  setJobAttributes("New Tab", onTAB, controlsElement);
+  setJobAttributes("Delete", onDelete, controlsElement);
 
 
   newJobElement.className = "rainbow";
@@ -78,10 +78,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   const queryParameters = activeTab.url.split("?")[1];
   const urlParameters = new URLSearchParams(queryParameters);
 
-  const currentVideo = urlParameters.get("currentJobId");
+  const currentJobId = urlParameters.get("currentJobId");
 
-  if (activeTab.url.includes("linkedin.com/jobs/search/") && currentVideo) {
-    console.log("rect");
+  if (activeTab.url.includes("linkedin.com/jobs/search/") && currentJobId) {
     chrome.storage.sync.get(["Jobs"], (data) => {
       const currentJobs = data["Jobs"] ? JSON.parse(data["Jobs"]) : [];
       viewJobs(currentJobs);

@@ -1,6 +1,6 @@
 .container {
-    width: 280px;
-    background-color:white;
+    width: 300px;
+    background-color: #0a66c2;
   }
  
   .title {
@@ -8,6 +8,8 @@
     font-weight: bold;
     padding: 8px;
     text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
   }
   
   .textbox {
@@ -36,15 +38,17 @@
     padding: 3px;
     padding-bottom: 7px;
     margin-bottom: 7px;
-    outline: red dashed 1px;
+    font-weight: bold;
   }
   
   .job-id {
     font-size: 18px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: white;
   }
   
   .job-controls img {
-    margin: 0 4px;
+    margin: 0 10px;
     cursor: pointer;
   }
   .job-controls {
@@ -56,7 +60,7 @@
 
   .rainbow {
     display: flex;
-    border-radius: 10px;
+    border-radius: 1px;
     padding: 2px;
     margin: 5px;
     display: grid;
@@ -76,7 +80,7 @@
         white 270deg 360deg
       )
       1 stretch;
-    background: rgb(255 255 255 / var(--opacity));
+    /* background: rgb(255 255 255 / var(--opacity)); */
   }
   
   /* Animate when Houdini is available */

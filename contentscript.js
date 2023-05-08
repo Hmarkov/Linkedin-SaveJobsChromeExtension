@@ -74,7 +74,7 @@
       const bookmarkBtnExists = document.getElementsByClassName("lock-btn")[0];
       if (!bookmarkBtnExists) {
         const bookmarkBtn = document.createElement("img");
-        bookmarkBtn.src = chrome.runtime.getURL("assets/padlock.png");
+        bookmarkBtn.src = chrome.runtime.getURL("assets/Save.png");
         bookmarkBtn.className = "jobs-lock " + "lock-btn";
         bookmarkBtn.title = "Click to lock apply button";
         PlaceSaveBtn = document.getElementsByClassName("jobs-search-results-list__subtitle")[0];
@@ -90,9 +90,12 @@
         newJobLoaded();
         setTimeout(function(){
           ExistingJobsChck();
-      }, 500);
+      }, 1000);
       }else if ( type === "TAB") {
         window.open("/jobs/search/?currentJobId="+value, '_blank').focus();
+        setTimeout(function(){
+              }, 10000);
+              ExistingJobsChck();
       }else if ( type === "DELETE") {
         DeleteJob(value);
       }

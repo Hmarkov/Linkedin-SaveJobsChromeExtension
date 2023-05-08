@@ -16,19 +16,21 @@
     "web_accessible_resources": [
       {
         "resources": [
-          "assets/padlock.png",
-          "assets/bookmark.png",
-          "assets/play.png",
-          "assets/delete.png",
-          "assets/save.png"
+          "assets/Save.png",
+          "assets/New Tab.png",
+          "assets/Delete.png"
         ],
         "matches": ["https://*.linkedin.com/*"]
       }
     ],
     "action": {
       "default_icon": {
-        "16": "assets/linkedin.png",
-        "32": "assets/linkedin.png"
+        "16": "icons/linked16.png",
+        "24": "icons/linked24.png",
+        "32": "icons/linked32.png",
+        "48": "icons/linked48.png",
+        "64": "icons/linked64.png",
+        "128": "icons/linked128.png"
       },
       "default_title": "Linkedin Applications",
       "default_popup": "popup.html"

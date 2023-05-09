@@ -1,7 +1,7 @@
 {
-    "name": "Linkedin Jobs",
+    "name": "Jobs Saver",
     "version": "0.1.0",
-    "description": "Linkedin Application",
+    "description": "Extension to save job posts from Linkedin",
     "permissions": ["storage", "tabs"],
     "host_permissions": ["https://*.linkedin.com/*"],
     "background": {
@@ -32,7 +32,7 @@
         "64": "icons/linked64.png",
         "128": "icons/linked128.png"
       },
-      "default_title": "Linkedin Applications",
+      "default_title": "Jobs Saver",
       "default_popup": "popup.html"
     },
     "manifest_version": 3

@@ -15,3 +15,4 @@
 <ul>
 <li>You can choose to open in new window or delete it from the list.</li>
 </ul>
+

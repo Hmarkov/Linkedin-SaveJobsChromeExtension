@@ -1,3 +1,4 @@
+# <a href="https://chrome.google.com/webstore/detail/jobs-saver/hfgoiloiogleeameljadaelidkcoieoh">Link to extension</a><
 # Chrome extension to keep tidy in one directly reachable place your linkedin job posts. 
 <ul>
 <li>Open any post and click on the padlock to save it.</li>
